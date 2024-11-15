@@ -1,0 +1,5 @@
+
+zone "tendaelectronicaa.int" {
+	type master;
+	file "/etc/bind/db.tendaelectronicaa.int";
+	};

@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  Examen23:
+    container_name: examen23
+    # usamos esta imagen para poder ver los logs
+    # la imagen de internetsystemsconsortium/bind9
+    # no muestra los logs
+    image: ubuntu/bind9
+    # especificamos la plataforma de la imagen
+    # es posible conflicto cuando el host es 'arm'
+    # ya que no existe una imagen para esa plataforma
+    platform: linux/amd64
+    ports:
+      - "55:55/udp"
+      - "55:55/tcp"
+    networks:
+      bind9_subnet:
+        ipv4_address: 172.16.23.1
+    volumes:
+      - ./conf:/etc/bind
+      - ./zonas:/var/lib/bind
+    restart: always
+  cliente:
+    container_name: examen_con
+    image: alpine:latest
+    platform: linux/amd64
+    tty: true
+    stdin_open: true
+    # configuramos para que el cliente use nuestro dns
+    dns:
+      - 172.16.23.1
+    networks:
+      bind9_subnet:
+        ipv4_address: 172.16.23.2
+    
+networks:
+  bind9_subnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.0.0/16
+
