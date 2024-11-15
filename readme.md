@@ -11,7 +11,7 @@ para poder interactuar primero se arranca con el comando: docker run -d (name) -
 ### 3. Cómo sería un ficheiro docker-compose para que dous contenedores se comuniquen entre si nunha rede só deles?
 
 Para hacer esto cree una carpeta de trabajo y dentro cree el archivo compose.yml donde añadi los contenedores con sus ip hasta con su rango maximo.
-'''
+```
 version: '3'
 
 services:
@@ -55,19 +55,19 @@ networks:
       config:
         - subnet: 192.168.0.0/16
 
-'''
+```
 ### 4. Qué tes que engadir ó ficheiro anterior para que un contenedor teña unha IP fixa?
 
 Para la IP fija en este caso está añadida en el apartado;
-'''
+```
     networks:
       bind9_subnet:
         ipv4_address: 192.168.23.2
-'''
+```
 ### 5. Qué comando de consola podo usar para sabe-las ips dos contenedores anteriores?
 
 Con el comando: (docker network inspect practica7_bind9_subnet) en este caso nos saldra toda la información de la red y lo que nos interesa es lo siguiente: 
-'''
+```
        "Containers": {
             "a1f9cc03381cdc8c35a05985f4c743ac0e8fad6d669220f23516cb57a13ce6ba": {
                 "Name": "7practica",
@@ -83,7 +83,7 @@ Con el comando: (docker network inspect practica7_bind9_subnet) en este caso nos
                 "IPv4Address": "192.168.23.2/16",
                 "IPv6Address": ""
             }
-'''
+```
 
 ### 6. Cál é a funcionalidade do apartado "ports" en docker compose?
 
@@ -106,7 +106,7 @@ En la carpeta de trabajo creada creamos el archivo compose.yml los volumenes de 
 
 El archivo yml, quedaria de la siguiente manera:
 
-'''
+```
 version: '3'
 
 services:
@@ -150,14 +150,14 @@ networks:
       config:
         - subnet: 172.16.0.0/16
 
-'''
+```
 
 Dentro de zonas creamos el fichero db.tendaelectronicaa.int donde pondremos el dominio con todo lo requerido.
 
 ### - www á IP 172.16.0.1
 ### - owncloud sexa un CNAME de www
 ### - un rexistro de texto có contido "1234ASDF"
-'''
+```
 $TTL 38400	; 10 hours 40 minutes
 @		IN SOA	ns.tendaelectronicaa.int. root.tendaelectronicaa.int. (
 				23         ; serial
@@ -171,7 +171,7 @@ ns		IN A		172.16.23.1
 test		IN A		172.16.23.4
 alias	IN CNAME	www.tendaelectronicaa.int.
 info	IN TXT		"S1234ASDF"
-'''
+```
 
 ### Comproba que todo funciona có comando "dig"
 
